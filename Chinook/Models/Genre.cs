@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Chinook.Models
+﻿namespace Chinook.Models
 {
     public partial class Genre
     {
@@ -12,7 +9,6 @@ namespace Chinook.Models
 
         public long GenreId { get; set; }
         public string? Name { get; set; }
-
         public virtual ICollection<Track> Tracks { get; set; }
     }
 }

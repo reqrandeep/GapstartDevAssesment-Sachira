@@ -1,14 +1,30 @@
 ﻿@page "/"
-@attribute [Authorize]
-
-@using Chinook.Models
-@using Microsoft.EntityFrameworkCore
+@inherits HomeModel
 
 <PageTitle>Index</PageTitle>
+<h2>Artists</h2>
 
-<h1>Artists</h1>
+@if (!string.IsNullOrWhiteSpace(InfoMessage))
+{
+    <div class="alert alert-info fade show">
+        <div class="d-flex align-items-start">
+            <div class="flex-grow-1">@InfoMessage</div>
+            <button type="button" class="btn-close" aria-label="Close" @onclick="CloseInfoMessage"></button>
+        </div>
+    </div>
+}
 
-@if (Artists == null)
+<form @onsubmit="ExecuteSearch">
+    <div class="input-group mb-3">
+        <input @bind="SearchQuery" @oninput="OnSearchQueryChanged" type="text" class="form-control" placeholder="Search your favourite artist here..">
+        <div class="input-group-append" style="padding-left:10px;">
+            <button @onclick="ExecuteSearch" class="btn btn-outline-secondary" type="button">Search</button>
+            <button @onclick="DisplayAllArtists" class="btn btn-outline-secondary" type="button" style="margin-left:10px;">All</button>
+        </div>
+    </div>
+</form>
+
+@if (ArtistList == null)
 {
     <Loading />
 }
@@ -22,37 +38,13 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var artist in Artists)
+            @foreach (var artist in ArtistList)
             {
                 <tr>
                     <td><a href="Artist/@artist.ArtistId">@artist.Name</a></td>
-                    <td>@artist.Albums.Count()</td>
+                    <td>@AlbumCountDictionary[artist.ArtistId]</td>
                 </tr>
             }
         </tbody>
     </table>
-}
-
-@code {
-    private List<Artist> Artists;
-    [Inject] IDbContextFactory<ChinookContext> DbFactory { get; set; }
-
-    protected override async Task OnInitializedAsync() {
-        await InvokeAsync(StateHasChanged);
-        Artists = await GetArtists();
-    }
-
-    public async Task<List<Artist>> GetArtists()
-    {   
-        var dbContext = await DbFactory.CreateDbContextAsync();
-        var users = dbContext.Users.Include(a => a.UserPlaylists).ToList();
-        
-        return dbContext.Artists.ToList();
-    }
-
-    public async Task<List<Album>> GetAlbumsForArtist(int artistId)
-    {
-        var dbContext = await DbFactory.CreateDbContextAsync();
-        return dbContext.Albums.Where(a => a.ArtistId == artistId).ToList();
-    }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Chinook.Models
+﻿namespace Chinook.Models
 {
     public partial class Customer
     {
@@ -23,7 +20,6 @@ namespace Chinook.Models
         public string? Fax { get; set; }
         public string Email { get; set; } = null!;
         public long? SupportRepId { get; set; }
-
         public virtual Employee? SupportRep { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
     }
