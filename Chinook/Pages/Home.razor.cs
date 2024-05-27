@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Chinook.Pages
 {
-    
+    [Authorize]
     public class HomeModel : ComponentBase
     {
         [Inject]

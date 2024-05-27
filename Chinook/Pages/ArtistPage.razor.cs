@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Chinook.Pages
 {
-   
+    [Authorize]
     public class ArtistPageModel : ComponentBase
     {
         [Inject]
