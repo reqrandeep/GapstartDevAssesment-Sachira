@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Chinook.Models
+﻿namespace Chinook.Models
 {
     public partial class Employee
     {
@@ -26,7 +23,6 @@ namespace Chinook.Models
         public string? Phone { get; set; }
         public string? Fax { get; set; }
         public string? Email { get; set; }
-
         public virtual Employee? ReportsToNavigation { get; set; }
         public virtual ICollection<Customer> Customers { get; set; }
         public virtual ICollection<Employee> InverseReportsToNavigation { get; set; }

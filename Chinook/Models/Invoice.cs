@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Chinook.Models
+﻿namespace Chinook.Models
 {
     public partial class Invoice
     {
@@ -19,7 +16,6 @@ namespace Chinook.Models
         public string? BillingCountry { get; set; }
         public string? BillingPostalCode { get; set; }
         public byte[] Total { get; set; } = null!;
-
         public virtual Customer Customer { get; set; } = null!;
         public virtual ICollection<InvoiceLine> InvoiceLines { get; set; }
     }
